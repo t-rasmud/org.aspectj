@@ -41,6 +41,7 @@ import org.aspectj.weaver.ast.Expr;
 import org.aspectj.weaver.ast.Literal;
 import org.aspectj.weaver.ast.Test;
 import org.aspectj.weaver.ast.Var;
+import org.checkerframework.dataflow.qual.SideEffectFree;
 
 public class IfPointcut extends Pointcut {
 	public ResolvedMember testMethod;
@@ -96,6 +97,7 @@ public class IfPointcut extends Pointcut {
 		return FuzzyBoolean.MAYBE;
 	}
 
+	@SideEffectFree
 	public boolean alwaysFalse() {
 		return false;
 	}

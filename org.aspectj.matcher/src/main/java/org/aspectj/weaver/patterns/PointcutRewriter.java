@@ -1,11 +1,11 @@
 /* *******************************************************************
  * Copyright (c) 2004 IBM Corporation.
- * All rights reserved. 
- * This program and the accompanying materials are made available 
- * under the terms of the Eclipse Public License v1.0 
- * which accompanies this distribution and is available at 
- * http://www.eclipse.org/legal/epl-v10.html 
- *  
+ * All rights reserved.
+ * This program and the accompanying materials are made available
+ * under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
  * ******************************************************************/
 package org.aspectj.weaver.patterns;
 
@@ -16,10 +16,11 @@ import java.util.TreeSet;
 
 import org.aspectj.weaver.Shadow;
 import org.aspectj.weaver.patterns.Pointcut.MatchesNothingPointcut;
+import org.checkerframework.checker.nonempty.qual.EnsuresNonEmpty;
 
 /**
  * Performs term rewriting for pointcut expressions.
- * 
+ *
  * @author colyer
  * @author clement
  */
@@ -400,6 +401,7 @@ public class PointcutRewriter {
 		return pc;
 	}
 
+	@EnsuresNonEmpty("#2")
 	private void collectAndNodes(AndPointcut apc, Set<Pointcut> nodesSoFar) {
 		Pointcut left = apc.getLeft();
 		Pointcut right = apc.getRight();
@@ -415,6 +417,7 @@ public class PointcutRewriter {
 		}
 	}
 
+	@EnsuresNonEmpty("#2")
 	private void collectOrNodes(Pointcut pc, Set<Pointcut> nodesSoFar) {
 		if (isOr(pc)) {
 			OrPointcut opc = (OrPointcut) pc;

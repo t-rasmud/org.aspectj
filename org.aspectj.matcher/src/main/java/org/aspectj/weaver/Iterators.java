@@ -1,13 +1,13 @@
 /* *******************************************************************
  * Copyright (c) 2002 Palo Alto Research Center, Incorporated (PARC).
- * All rights reserved. 
- * This program and the accompanying materials are made available 
- * under the terms of the Eclipse Public License v1.0 
- * which accompanies this distribution and is available at 
- * http://www.eclipse.org/legal/epl-v10.html 
- *  
- * Contributors: 
- *     PARC     initial implementation 
+ * All rights reserved.
+ * This program and the accompanying materials are made available
+ * under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     PARC     initial implementation
  * ******************************************************************/
 
 package org.aspectj.weaver;
@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import org.checkerframework.framework.qual.EnsuresQualifierIf;
+import org.checkerframework.checker.iteration.qual.HasNext;
 
 public final class Iterators {
 
@@ -205,6 +207,8 @@ public final class Iterators {
 	public static <A, B> Iterator<B> mapOver(final Iterator<A> a, final Getter<A, B> g) {
 		return new Iterator<B>() {
 			Iterator<B> delegate = new Iterator<B>() {
+				@SuppressWarnings("iteration:contracts.conditional.postcondition.true.override.invalid")
+				@EnsuresQualifierIf(result=true, expression="this.delegate", qualifier=HasNext.class)
 				public boolean hasNext() {
 					if (!a.hasNext()) {
 						return false;
@@ -226,6 +230,8 @@ public final class Iterators {
 				}
 			};
 
+			@EnsuresQualifierIf(result=true, expression="this.delegate", qualifier=HasNext.class)
+			@SuppressWarnings("iteration:contracts.conditional.postcondition.true.override.invalid")
 			public boolean hasNext() {
 				return delegate.hasNext();
 			}
@@ -248,6 +254,8 @@ public final class Iterators {
 		return new Iterator<A>() {
 			Iterator<A> delegate = one(a);
 
+			@SuppressWarnings("iteration:contracts.conditional.postcondition.true.override.invalid")
+			@EnsuresQualifierIf(result=true, expression="this.delegate", qualifier=HasNext.class)
 			public boolean hasNext() {
 				return delegate.hasNext();
 			}
